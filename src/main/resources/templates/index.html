@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Temperature control</title>
+
+    <link rel="icon" th:href="@{/icon/flavicon.png}">
+    <link th:rel="stylesheet" type="text/css" th:href="@{/css/wrapper.css}">
+    <link th:rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" type="text/css" th:href="@{/font-awesome/css/font-awesome.min.css}">
+    <style>
+        table {
+            font-size: 14px;
+            width: 100%; /* Ширина таблицы */
+            border-collapse: collapse; /* Убираем двойные линии */
+            text-align: justify;
+        }
+
+        td, th {
+            padding: 5px; /* Поля в ячейках */
+            border: 1px solid #333; /* Параметры рамки */
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f0f0f0; /* Зебра */
+        }</style>
+</head>
+<body>
+<div class="wrapper">
+    <div lang="en" th:replace="fragments/header :: header"></div>
+    <h3 class="text-center">Добро пожаловать, уважаемый пользователь!</h3>
+    <h4 class="text-center">Это система контроля за температурным режимом в серверных помещениях БП-450.</h4>
+    <br>
+    <table style="float: left">
+        <tr>
+            <th>Наименование помещения</th>
+            <th>Дата измерения</th>
+            <th>Текущая температура</th>
+            <th>Критическая температура</th>
+            <th>Сатус датчика</th>
+            <th>Режим оповещения</th>
+        </tr>
+        <tr th:each="unit: ${units}">
+            <td th:text="${unit.name}">unit name</td>
+            <td th:text="${#temporals.format(unit.dateOfTemperatureMeasurement, 'dd MMM HH:mm:ss')}">date of temperature measurement</td>
+            <td th:text="${unit.actualTemperature}">actual temperature</td>
+            <td th:text="${unit.criticalTemperature}">critical temperature</td>
+            <td th:if="${unit.status}" th:text="Включен">status</td>
+            <td th:unless="${unit.status}" th:text="Выключен">status</td>
+            <td th:if="${unit.notification}" th:text="Включен">notification</td>
+            <td th:unless="${unit.notification}" th:text="Выключен">notification</td>
+        </tr>
+    </table>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div lang="en" th:replace="fragments/footer :: footer"></div>
+</div>
+</body>
+</html>

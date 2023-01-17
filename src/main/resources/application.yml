@@ -1,0 +1,57 @@
+server:
+  port: 28888
+
+temperature-unit:
+  name1: ServerRoom1
+  name2: ServerRoom2
+  critical-temperature1: 28
+  critical-temperature2: 28
+  wav:
+    file:
+      name1: room1
+      name2: room2
+
+# delay between check status units
+fixed-delay:
+  in:
+    milliseconds: 1800000
+
+asterisk:
+  host: "10.1.10.110"
+  port: 22
+  user-name: "admin"
+  password: "paSSword"
+  number-of-phone: 2324
+
+snmp-delta:
+  host: "10.1.11.220"
+  port: "161"
+  oid: "1.3.6.1.4.1.2254.2.4.7.9"
+
+serial-port:
+  name: "COM3" # "/dev/ttyUSB0" - for linux system
+
+spring:
+  datasource:
+    url: jdbc:sqlite:./temp_control.db
+    driver-class-name: org.sqlite.JDBC
+    username: admin
+    password: admin
+
+  #data settings
+  jpa:
+    database-platform: org.sqlite.hibernate.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: update
+
+  #scheduler pool size increase
+  task:
+    scheduling:
+      pool:
+        size: 5
+
+logging:
+  level:
+    org:
+      springframework:
+        security: off

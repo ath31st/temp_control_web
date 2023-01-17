@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<!-- Pagination Bar -->
+<div th:fragment="paginationbar">
+    <div class="pagination justify-content-center">
+        <ul th:if="${page.totalPages > 1}">
+            <li style="display:inline" th:class="${page.firstPage}? 'disabled' : ''">
+            <span th:if="${page.firstPage}">← Первая</span>
+            <a th:if="${not page.firstPage}" th:href="@{${page.url}(page.page=1,page.size=${page.size})}">← Первая</a>
+            </li>
+            <li style="display:inline" th:class="${page.hasPreviousPage}? '' : 'disabled'">
+            <span th:if="${not page.hasPreviousPage}">«</span>
+            <a th:if="${page.hasPreviousPage}"
+               th:href="@{${page.url}(page.page=${page.number-1},page.size=${page.size})}"
+               title="Перейти на предыдущую страницу">«</a>
+            </li>
+            <li style="display:inline" th:each="item : ${page.items}" th:class="${item.current}? 'active' : ''">
+            <span th:if="${item.current}" th:text="${item.number}">1</span>
+            <a th:if="${not item.current}"
+               th:href="@{${page.url}(page.page=${item.number},page.size=${page.size})}"><span th:text="${item.number}">1</span></a>
+            </li>
+            <li style="display:inline" th:class="${page.hasNextPage}? '' : 'disabled'">
+            <span th:if="${not page.hasNextPage}">»</span>
+            <a th:if="${page.hasNextPage}" th:href="@{${page.url}(page.page=${page.number+1},page.size=${page.size})}"
+               title="Перейти на следующую страницу">»</a>
+            </li>
+            <li style="display:inline" th:class="${page.lastPage}? ' disabled' : ''">
+            <span th:if="${page.lastPage}">Последняя →</span>
+            <a th:if="${not page.lastPage}"
+               th:href="@{${page.url}(page.page=${page.totalPages},page.size=${page.size})}">Последняя →</a>
+            </li>
+        </ul>
+    </div>
+</div>

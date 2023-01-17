@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings</title>
+
+    <link rel="icon" th:href="@{/icon/flavicon.png}">
+    <link th:rel="stylesheet" type="text/css" th:href="@{/css/wrapper.css}">
+    <link th:rel="stylesheet" type="text/css" th:href="@{/css/error.css}">
+    <link th:rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" type="text/css" th:href="@{/font-awesome/css/font-awesome.min.css}">
+
+</head>
+<body>
+<div class="wrapper">
+    <div lang="en" th:replace="fragments/header :: header"></div>
+    <div class="container-fluid">
+        <!-- PAGE TITLE -->
+        <div class="page-title">
+            <h3>
+                <span class="fa fa-arrow-circle-o-left"></span> Настройки
+            </h3>
+        </div>
+        <!-- END PAGE TITLE -->
+        <div class="column">
+            <form th:action="@{/settings}" th:object="${settingsWrapper}" method="post">
+                <table>
+                    <tr>
+                        <td>СЕРВЕРНОЕ ПОМЕЩЕНИЕ ЦКП</td>
+                    </tr>
+                    <tr>
+                        <td>Состояние модуля контроля температуры:</td>
+                        <td th:if="${unit1.status}" th:text="Включен">status</td>
+                        <td th:unless="${unit1.status}" th:text="Выключен">status</td>
+                    </tr>
+                    <tr>
+                        <td th:if="${unit1.status}">Отключить модуль?</td>
+                        <td th:unless="${unit1.status}">Включить модуль?</td>
+                        <td><input type="checkbox" th:field="*{statusUnit1}"></td>
+                        <td class="error" th:if="${#fields.hasErrors('statusUnit1')}" th:errors="*{statusUnit1}">unit status Error
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Критическая температура:</td>
+                        <td th:text="${unit1.criticalTemperature}">critical temperature</td>
+                    </tr>
+                    <tr>
+                        <td>Введите новое значение критической температуры:</td>
+                        <td><input type="text" th:field="*{criticalTemperatureUnit1}"></td>
+                    </tr>
+                    <tr>
+                        <td class="error" th:if="${#fields.hasErrors('criticalTemperatureUnit1')}"
+                            th:errors="*{criticalTemperatureUnit1}">critical temperature Error
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>СЕРВЕРНОЕ ПОМЕЩЕНИЕ ЗК</td>
+                    </tr>
+                    <tr>
+                        <td>Состояние модуля контроля температуры:</td>
+                        <td th:if="${unit2.status}" th:text="Включен">status</td>
+                        <td th:unless="${unit2.status}" th:text="Выключен">status</td>
+                    </tr>
+                    <tr>
+                        <td th:if="${unit2.status}">Отключить модуль?</td>
+                        <td th:unless="${unit2.status}">Включить модуль?</td>
+                        <td><input type="checkbox" th:field="*{statusUnit2}"></td>
+                        <td class="error" th:if="${#fields.hasErrors('statusUnit2')}" th:errors="*{statusUnit2}">unit status Error
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Критическая температура:</td>
+                        <td th:text="${unit2.criticalTemperature}">critical temperature</td>
+                    </tr>
+                    <tr>
+                        <td>Введите новое значение критической температуры:</td>
+                        <td><input type="text" th:field="*{criticalTemperatureUnit2}"></td>
+                    </tr>
+                    <tr>
+                        <td class="error" th:if="${#fields.hasErrors('criticalTemperatureUnit2')}"
+                            th:errors="*{criticalTemperatureUnit2}">critical temperature Error
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Установлен следующий телефонный номер для оповещения: 71-01-</td>
+                        <td th:text="${num}">number of phone</td>
+                    </tr>
+                    <tr>
+                        <td>Введите новый телефонный номер для оповещения: 71-01-</td>
+                        <td><input type="text" th:field="*{numberOfPhone}"></td>
+                    </tr>
+                    <tr>
+                        <td class="error" th:if="${#fields.hasErrors('numberOfPhone')}"
+                            th:errors="*{numberOfPhone}">number of phone Error
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <div>
+                    <span><b>Примечание 1.</b> Отключение модуля остановит получение и сравнение температуры в указанном помещении.
+                        Например, если планируется допущение длительного, согласованного превышения критической температуры.
+                        После окончания работ/мероприятий следует включить модуль.</span>
+                </div>
+                <div>
+                    <span><b>Примечание 2.</b> При изменении настроек, в базу данных будет внесен IP адрес компьютера, список изменений и время их внесения.</span>
+                </div>
+                <div>
+                    <span><b>Примечание 3.</b> Если вы не понимаете о чем идет речь и к чему относятся эти настройки просьба воздержаться от внесения изменений. Спасибо за понимание.</span>
+                </div>
+                <br>
+                <div>
+                    <button type="submit" onclick="return confirm('Вы уверены?')" class="btn btn-primary">Применить
+                        настройки
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div lang="en" th:replace="fragments/footer :: footer"></div>
+</div>
+</body>
+</html>
