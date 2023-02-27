@@ -42,16 +42,17 @@ public class SnmpService {
             throw new RuntimeException(e);
         }
 
-        if (responseEvent != null) {
-            PDU responsePDU = responseEvent.getResponse();
-            return responsePDU.getVariableBindings().toString();
-        }
-
         try {
             snmp.close();
         } catch (IOException e) {
             eventService.create("Snmp closing error: " + e.getMessage(), EventStatus.ERROR);
         }
+
+        if (responseEvent != null) {
+            PDU responsePDU = responseEvent.getResponse();
+            return responsePDU.getVariableBindings().toString();
+        }
+
         return "0";
     }
 
